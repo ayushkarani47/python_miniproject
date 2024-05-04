@@ -1,10 +1,9 @@
-import numpy as np
 import pandas as pd 
 
 import ast
 import pickle
 
-import os
+
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -64,6 +63,6 @@ def recommend(movie):
     for i in distances[1:6]:
         print(new.iloc[i[0]].title)
 
-recommend('Gandhi')
+recommend('Cars')
 pickle.dump(new,open('movie_list.pkl','wb'))
 pickle.dump(similarity,open('similarity.pkl','wb'))

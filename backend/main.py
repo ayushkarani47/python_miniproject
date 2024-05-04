@@ -10,7 +10,7 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 movies = pickle.load(open('./movie_list.pkl','rb'))
-similarity = pickle.load(open('.//similarity.pkl','rb'))
+similarity = pickle.load(open('./similarity.pkl','rb'))
 
 def fetch_poster(movie_id):
     url = "https://api.themoviedb.org/3/movie/{}?api_key=8265bd1679663a7ea12ac168da84d2e8&language=en-US".format(movie_id)
@@ -34,10 +34,12 @@ def recommend(movie):
         recommended_movie_posters.append(fetch_poster(movie_id))
         recommended_movie_names.append(movies.iloc[i[0]].title)
     return [{'name': name, 'poster': poster} for name, poster in zip(recommended_movie_names, recommended_movie_posters)]   
-@app.route("/")
+
 @cross_origin()
+@app.route("/",  methods=['GET'])
 def hello_world():
     movie = request.args.get('movie')
     recommendations = recommend(movie)
     print(recommendations)
     return recommendations
+
